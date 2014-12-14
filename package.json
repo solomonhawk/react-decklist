@@ -1,0 +1,28 @@
+{
+  "name": "decklist",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve": "npm run watch-js & npm run watch-css",
+    "serve-js": "./node_modules/.bin/webpack-dev-server -h --config ./webpack.hot.config.js",
+    "watch-js": "./node_modules/.bin/webpack -dw --config ./webpack.config.js",
+    "build-js": "./node_modules/.bin/webpack -p --config ./webpack.config.js",
+    "watch-css": "./node_modules/.bin/sass --watch src/stylesheets/stylesheet.sass:dist/stylesheet.css",
+    "build-css": "./node_modules/.bin/sass src/stylesheets/stylesheet.sass dist/stylesheet.css",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "json-loader": "^0.5.1",
+    "jsx-loader": "^0.12.2",
+    "webpack": "^1.4.13",
+    "webpack-dev-middleware": "^1.0.11",
+    "webpack-dev-server": "^1.6.6"
+  },
+  "dependencies": {
+    "jquery": "^2.1.1",
+    "react": "^0.12.1"
+  }
+}
