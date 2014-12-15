@@ -1,7 +1,10 @@
-var React       = require('react');
-var CardList    = require('components/CardList');
+var React    = require('react/addons');
+var CardList = require('components/CardList');
+var Pure     = React.addons.PureRenderMixin;
 
 var DeckList = React.createClass({
+
+  mixins: [Pure],
 
   getInitialState: function() {
     return {

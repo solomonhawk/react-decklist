@@ -1,14 +1,14 @@
-var React        = require('react');
+var React        = require('react/addons');
 var Reflux       = require('reflux');
-var Card         = require('components/Card');
 var CardListItem = require('components/CardListItem');
 var CardStore    = require('stores/CardStore');
 var CardActions  = require('actions/CardActions');
 var StateView    = require('components/StateView');
+var Pure     = React.addons.PureRenderMixin;
 
 var CardList = React.createClass({
 
-  mixins: [Reflux.ListenerMixin],
+  mixins: [Pure, Reflux.ListenerMixin],
 
   getInitialState: function() {
     return {
@@ -43,11 +43,7 @@ var CardList = React.createClass({
           sort={ this.sort }
           data={ this.state.data }
           key={ i }
-          item={ card }>
-
-          <Card data={ card } />
-
-        </CardListItem>
+          item={ card }/>
       )
     };
 

@@ -33,6 +33,8 @@ var CardStore = Reflux.createStore({
 
   updateCards: function(cards, data) {
     cards.map(function(card, i) {
+      // `cards[i]` is a multiverse_id which
+      // is used as the key in `this.cards`
       this.cards[cards[i]] = data[i][0];
       this.cards[cards[i]].image_url = getImageUrl(cards[i]);
       this.cards[cards[i]].multiverse_id = cards[i];
