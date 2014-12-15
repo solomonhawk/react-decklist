@@ -35,7 +35,10 @@ var Sortable = {
     this.dragged = e.currentTarget.dataset ?
       e.currentTarget.dataset.id :
       e.currentTarget.getAttribute('data-id');
+
     e.dataTransfer.effectAllowed = 'move';
+
+    if (typeof this.placeholder === 'function') this.placeholder(e, this.refs.listItem.getDOMNode());
 
     try {
       e.dataTransfer.setData('text/html', null);
