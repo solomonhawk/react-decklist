@@ -7,7 +7,7 @@ var Pure        = React.addons.PureRenderMixin;
 
 var cx = React.addons.classSet;
 
-DEFAULT_CARD_IMG_URL = "/src/images/Card--default.png";
+var DEFAULT_CARD_IMG_URL = "/src/images/Card--default.png";
 
 var Card = React.createClass({
 
@@ -22,7 +22,7 @@ var Card = React.createClass({
   getInitialState: function() {
     return {
       zoomed: false,
-      revealed: false,
+      revealed: false
     }
   },
 
@@ -34,6 +34,7 @@ var Card = React.createClass({
 
     return (
       <div className={ "Card " + classes }
+           onMouseMove={ this.onMouseMove }
            onMouseEnter={ this.onMouseEnter }
            onMouseLeave={ this.onMouseLeave }
            onMouseDown={ this.onMouseDown }
@@ -46,6 +47,12 @@ var Card = React.createClass({
     );
   },
 
+  onMouseMove: function(e) {
+    if (this.state.mouseDown) {
+      this.setState({ zoomed: false, revealed: false });
+    }
+  },
+
   onMouseEnter: function(e) {
     this.setState({ revealed: true });
   },
@@ -55,11 +62,11 @@ var Card = React.createClass({
   },
 
   onMouseDown: function(e) {
-    this.setState({ zoomed: true });
+    this.setState({ zoomed: true, mouseDown: true });
   },
 
   onMouseUp: function(e) {
-    this.setState({ zoomed: false });
+    this.setState({ zoomed: false, mouseDown: false });
   }
 });
 
