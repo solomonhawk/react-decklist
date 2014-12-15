@@ -1,26 +1,17 @@
-var $ = require('jquery');
-var React = require('react/addons');
+var React       = require('react/addons');
+var Reflux      = require('reflux');
+var CardActions = require('actions/CardActions');
+var CardStore   = require('stores/CardStore');
+var equal       = require('deep-equal');
+var Pure        = React.addons.PureRenderMixin;
 
 var cx = React.addons.classSet;
 
-IMAGE_API_URL        = "http://mtgimage.com/multiverseid/";
-CARD_API_URL         = "https://api.deckbrew.com/mtg/cards";
 DEFAULT_CARD_IMG_URL = "/src/images/Card--default.png";
 
-var getCardData = function(id) {
-  return $.get(CARD_API_URL + '?multiverseid=' + id)
-    .then(function (response) {
-      return $.Deferred(function (deferred) {
-        if (!response.length) {
-          return deferred.reject("No results found.")
-        }
-
-        deferred.resolve(response[0]);
-      }).promise();
-    });
-}
-
 var Card = React.createClass({
+
+  mixins: [Pure],
 
   getDefaultProps: function () {
     return {
@@ -30,25 +21,9 @@ var Card = React.createClass({
 
   getInitialState: function() {
     return {
-      name          : this.props.data.name,
-      zoomed        : false,
-      revealed      : false,
-      multiverse_id : this.props.data.multiverse_id,
-      image_url     : DEFAULT_CARD_IMG_URL
+      zoomed: false,
+      revealed: false,
     }
-  },
-
-  componentWillMount: function() {
-    getCardData(this.state.multiverse_id)
-      .done(function(data) {
-        this.setState(data || {});
-      }.bind(this))
-
-      .fail(function(data) {
-        this.setState({ error: data })
-      }.bind(this));
-
-    this.loadApiImage(this.state.multiverse_id);
   },
 
   render: function() {
@@ -64,21 +39,11 @@ var Card = React.createClass({
            onMouseDown={ this.onMouseDown }
            onMouseUp={ this.onMouseUp }>
 
-        <img alt={ this.state.name }
-             src={ this.state.image_url } />
+        <img alt={ this.props.data.name }
+             src={ this.props.data.image_url || DEFAULT_CARD_IMG_URL } />
 
       </div>
     );
-  },
-
-  loadApiImage: function(id) {
-    var img = new Image();
-
-    img.onload = function() {
-      this.setState({ image_url: img.src });
-    }.bind(this);
-
-    img.src = IMAGE_API_URL + id + '.jpg';
   },
 
   onMouseEnter: function(e) {
