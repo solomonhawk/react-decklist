@@ -1,19 +1,20 @@
-var React    = require('react');
+var React    = require('react/addons');
 var Sortable = require('mixins/Sortable');
+var Pure     = React.addons.PureRenderMixin;
+
+var cx       = React.addons.classSet;
 
 var CardListItem = React.createClass({
 
-  mixins: [Sortable]
-
-  getInitialState: function() {
-    return {
-      children: this.props.children
-    }
-  },
+  mixins: [Pure, Sortable],
 
   render: function() {
+    var classes = cx({
+      "-dragging": this.isDragging()
+    });
+
     return (
-      <li className="CardList-Item" {...this.props} data-id={ i } key={ i }>
+      <li className={ "CardList-Item " + classes } { ...this.props }>
         { this.props.children }
       </li>
     )

@@ -1,5 +1,5 @@
-var React = require('react');
-var CardList = require('components/CardList');
+var React       = require('react');
+var CardList    = require('components/CardList');
 
 var DeckList = React.createClass({
 
@@ -12,17 +12,17 @@ var DeckList = React.createClass({
   },
 
   render: function() {
-    var lists = this.state.cardLists.map(function(list, i) {
+    var createList = function(list, i) {
       return (
         <li className="DeckList-Item" data-id={ i } key={ i }>
           <CardList cards={ list.cards } />
         </li>
       );
-    });
+    };
 
     return (
       <ul className="DeckList">
-        { lists }
+        { this.state.cardLists.map(createList) }
       </ul>
     )
   }
