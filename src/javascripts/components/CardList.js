@@ -4,7 +4,7 @@ var CardListItem = require('components/CardListItem');
 var CardStore    = require('stores/CardStore');
 var CardActions  = require('actions/CardActions');
 var StateView    = require('components/StateView');
-var Pure     = React.addons.PureRenderMixin;
+var Pure         = React.addons.PureRenderMixin;
 
 var CardList = React.createClass({
 

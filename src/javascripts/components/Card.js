@@ -4,10 +4,10 @@ var CardActions = require('actions/CardActions');
 var CardStore   = require('stores/CardStore');
 var equal       = require('deep-equal');
 var Pure        = React.addons.PureRenderMixin;
-
-var cx = React.addons.classSet;
+var cx          = React.addons.classSet;
 
 var DEFAULT_CARD_IMG_URL = "/src/images/Card--default.png";
+
 
 var Card = React.createClass({
 
@@ -21,8 +21,9 @@ var Card = React.createClass({
 
   getInitialState: function() {
     return {
-      zoomed: false,
-      revealed: false
+      zoomed    : false,
+      revealed  : false,
+      image_url : this.props.data.image_url || DEFAULT_CARD_IMG_URL
     }
   },
 
@@ -41,7 +42,7 @@ var Card = React.createClass({
            onMouseUp={ this.onMouseUp }>
 
         <img alt={ this.props.data.name }
-             src={ this.props.data.image_url || DEFAULT_CARD_IMG_URL } />
+             src={ this.state.image_url } />
 
       </div>
     );

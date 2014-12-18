@@ -32,7 +32,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'jsx-loader?harmony=true?insertPragma=React.DOM'
+        loader: 'jsx-loader?harmony=true'
       },
       {
         test: /\.json$/,
