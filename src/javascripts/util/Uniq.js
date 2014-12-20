@@ -1,4 +1,4 @@
-module.exports = function(arr) {
+module.exports = function uniq(arr) {
   var result = [];
 
   arr.map(function(item) {

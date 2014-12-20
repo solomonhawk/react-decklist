@@ -5,14 +5,15 @@ var CardApi = require('api/CardApi');
 var DeckApi = require('api/DeckApi');
 var ls      = localStorage;
 
-var APP_NAMESPACE = 'dotdec';
+var APP_NAMESPACE   = 'dotdec';
+var DECKS_NAMESPACE = 'decks';
+var CARDS_NAMESPACE = 'cards';
 
 var getLSKey = function(ns, id) {
   return `${ APP_NAMESPACE }:${ ns }:${ id }`;
 }
 
 var Sync = {
-
   _get(ns, id, api) {
     return new Promise(function(resolve, reject) {
       var data = JSON.parse(
@@ -42,19 +43,19 @@ var Sync = {
   },
 
   getDeck(id) {
-    return Sync._get('decks', id, DeckApi);
+    return Sync._get(DECKS_NAMESPACE, id, DeckApi);
   },
 
   setDeck(id, data) {
-    return Sync._set('decks', id, data);
+    return Sync._set(DECKS_NAMESPACE, id, data);
   },
 
   getCard(id) {
-    return Sync._get('cards', id, CardApi);
+    return Sync._get(CARDS_NAMESPACE, id, CardApi);
   },
 
   setCard(id, data) {
-    return Sync._set('cards', id, data);
+    return Sync._set(CARDS_NAMESPACE, id, data);
   }
 }
 

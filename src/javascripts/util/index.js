@@ -1,5 +1,6 @@
 module.exports = {
   noop() {},
-  uuid: require('util/Uuid'),
-  uniq: require('util/Uniq')
+  slugify : require('util/Slugify'),
+  uuid    : require('util/Uuid'),
+  uniq    : require('util/Uniq')
 }

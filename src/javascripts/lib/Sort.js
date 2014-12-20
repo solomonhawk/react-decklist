@@ -2,7 +2,7 @@ var hasOwnProp = Object.hasOwnProperty;
 
 var getValue = function(item, key) {
   if (typeof item[key] == 'array') {
-    return item[key][0];
+    return item[key].sort()[0];
   } else {
     return item[key];
   }
@@ -11,14 +11,39 @@ var getValue = function(item, key) {
 /*
  * @param list   array of objects
  * @param key    string the key of the object to sort by
- * @param order  string 'ASC' || 'DSC'
- * @return 2d array "list of cardLists"
+ * @param order  string 'ASC' || 'DSC', use Sort.order.ASC or Sort.order.DESC
+ * @return array sorted array
 */
-
 var Sort = {
-  types: {
-    ASC  : 'asc',
-    DESC : 'desc'
+  type: {
+    byName  : 'byName',
+    byType  : 'byType',
+    byCmc   : 'byCmc',
+    byColor : 'byColor'
+  },
+
+  order: {
+    ASC  : 'ASC',
+    DESC : 'DESC'
+  },
+
+  getSortOptions() {
+    var sortOptions = [
+      { value: Sort.type.byCmc,   text: 'Sort by CMC' },
+      { value: Sort.type.byName,  text: 'Sort by Name' },
+      { value: Sort.type.byType,  text: 'Sort by Type' },
+      { value: Sort.type.byColor, text: 'Sort by Color' }
+    ];
+
+    var orderOptions = [
+      { value: Sort.order.ASC, text: 'Ascending' },
+      { value: Sort.order.DESC, text: 'Descending' }
+    ];
+
+    return {
+      sort: sortOptions,
+      order: orderOptions
+    }
   },
 
   byName(list, order) {
@@ -43,11 +68,14 @@ var Sort = {
 
   // private
 
-  _byKey(list, key, order) {
-    console.log(order);
-    var sorted = list.sort(Sort._keyCompare.bind(this, key));
-    var grouped = Sort._groupBy(sorted, key);
-    return order == Sort.types.ASC ? grouped : grouped.reverse()
+  _byKey(list, key, order, grouped) {
+    var sorted  = list.sort(Sort._keyCompare.bind(this, key));
+
+    if (grouped != false) {
+      sorted = Sort._groupBy(sorted, key);
+    }
+
+    return (!order || order == Sort.order.ASC) ? sorted : sorted.reverse()
   },
 
   _keyCompare(key, a, b) {
@@ -66,7 +94,9 @@ var Sort = {
     });
 
     Object.keys(groups).map(function(key, i) {
-      result.push(groups[key]);
+      result.push(
+        Sort._byKey(groups[key], 'name', Sort.order.ASC, false)
+      );
     });
 
     return result;

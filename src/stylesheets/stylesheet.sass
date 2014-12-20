@@ -29,7 +29,8 @@ $ease-in-out-circ:  cubic-bezier(0.785, 0.135, 0.150, 0.860)
 $ease-in-out-back:  cubic-bezier(0.680, -0.550, 0.265, 1.550)
 
 
-$scale: .5
+$scale: 1
+$unit: 4px
 
 =clearfix
   *zoom: 1
@@ -42,15 +43,20 @@ $scale: .5
   &:after
     clear: both
 
+*,
+*:before,
+*:after
+  box-sizing: border-box
 
 body
   background-color: #222
   color: #fff
+  padding: 4 * $unit
 
 ul
+  list-style-type: none
   margin: 0
   padding: 0
-  list-style-type: none
 
 li.placeholder
   background: rgb(255,240,120)
@@ -61,13 +67,13 @@ li.placeholder:before
 
 .DeckList
   +clearfix
-  padding: 32px
-  overflow: visible
+  white-space: nowrap
 
   .DeckList-Item
+    display: inline-block
+    vertical-align: top
     -webkit-user-select: none
     user-select: none
-    float: left
     width: 250px * $scale
 
     + .DeckList-Item
@@ -75,39 +81,41 @@ li.placeholder:before
 
 .CardList
   outline: 1px dotted #666
-  padding: 4px
+  padding: $unit
 
   .CardList-Item
+    cursor: pointer
+    height: 9 * $unit * $scale
+    padding: 0
     -webkit-user-select: none
     user-select: none
-    cursor: pointer
-    height: 35px * $scale
-    padding: 0
 
     &:last-child
       height: auto
 
 .Card
-  -webkit-user-select: none
-  user-select: none
+  border-radius: 2 * $unit * $scale
+  cursor: pointer
   transform: scale(1)
-  transition: 0.25s transform $ease-in-out-quint
-  border-radius: 8px
   height: 100%
   position: relative
+  transition: 0.25s transform $ease-in-out-quint
+  -webkit-user-select: none
+  user-select: none
+  white-space: normal
   z-index: 1
 
   > img
-    transition: .1s all $in-out
+    border-radius: 2 * $unit * $scale
     box-shadow: 0 0 0 rgba(royalblue, 1)
-    pointer-events: none
-    border-radius: 8px
     display: block
+    pointer-events: none
+    transition: .1s all $in-out
     -webkit-user-select: none
     user-select: none
     width: 100%
 
-.Card--hover
+.Card:hover
   z-index: 10
 
   > img

@@ -13,15 +13,13 @@ var Card = React.createClass({
 
   getInitialState: function() {
     return {
-      zoomed    : false,
-      revealed  : false
+      zoomed: false
     }
   },
 
   render: function() {
     var classes = cx({
-      "Card--hover" : this.state.revealed,
-      "Card--zoom"  : this.state.zoomed
+      "Card--zoom": this.state.zoomed
     });
 
     return (
@@ -41,16 +39,12 @@ var Card = React.createClass({
 
   onMouseMove: function(e) {
     if (this.state.mouseDown) {
-      this.setState({ zoomed: false, revealed: false });
+      this.setState({ zoomed: false });
     }
   },
 
-  onMouseEnter: function(e) {
-    this.setState({ revealed: true });
-  },
-
   onMouseLeave: function(e) {
-    this.setState({ revealed: false, zoomed: false });
+    this.setState({ zoomed: false });
   },
 
   onMouseDown: function(e) {

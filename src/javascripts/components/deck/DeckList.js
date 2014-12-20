@@ -21,19 +21,17 @@ var DeckList = React.createClass({
 
   getDefaultProps() {
     return {
-      sort: Sort.byCmc,
-      order: Sort.types.ASC
+      sort: Sort.type.byCmc,
+      order: Sort.order.ASC
     }
   },
 
   getInitialState() {
     return {
-      syncing: false,
-      deck: null,
-      sort: this.props.sort,
-      order: this.props.order,
-      sortKey: 'byCmc',
-      orderKey: 'ASC'
+      deck    : null,
+      syncing : false,
+      sort    : this.props.sort,
+      order   : this.props.order
     }
   },
 
@@ -48,15 +46,13 @@ var DeckList = React.createClass({
 
   _onSortChange(e) {
     this.setState({
-      sort: Sort[e.target.value] || this.props.sort,
-      sortKey: e.target.value
+      sort: Sort.type[e.target.value || this.props.sort]
     })
   },
 
   _onOrderChange(e) {
     this.setState({
-      order: Sort.types[e.target.value] || this.props.order,
-      orderKey: e.target.value
+      order: Sort.order[e.target.value || this.props.order]
     })
   },
 
@@ -72,37 +68,27 @@ var DeckList = React.createClass({
     };
 
     if (this.state.deck) {
-      var { deck, sort, order, sortKey, orderKey } = this.state;
+      var { deck, sort, order } = this.state;
 
-      var sorted    = sort(deck.mainDeck, order);
+      console.log(sort, order);
+
+      var sorted    = Sort[sort](deck.mainDeck, order);
       var cardLists = sorted.map(createCardLists);
     }
-
-    var sortOptions = [
-      { value: 'byName', text: 'Sort by Name' },
-      { value: 'byCmc', text: 'Sort by CMC' },
-      { value: 'byType', text: 'Sort by Type' },
-      { value: 'byColor', text: 'Sort by Color' }
-    ]
-
-    var orderOptions = [
-      { value: 'ASC', text: 'Ascending' },
-      { value: 'DESC', text: 'Descending' }
-    ]
 
     return (
       <div>
         <SelectInput
-          onChange={ this._onSortChange }
           allowBlank={ false }
-          options={ sortOptions }
-          value={ sortKey } />
+          onChange={ this._onSortChange }
+          options={ Sort.getSortOptions().sort }
+          value={ sort } />
 
         <SelectInput
-          onChange={ this._onOrderChange }
           allowBlank={ false }
-          options={ orderOptions }
-          value={ orderKey } />
+          onChange={ this._onOrderChange }
+          options={ Sort.getSortOptions().order }
+          value={ order } />
 
         <ul className="DeckList">
           { cardLists }
