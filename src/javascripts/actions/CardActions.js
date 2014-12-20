@@ -1,7 +1,11 @@
 var Reflux = require('reflux');
 
 var CardActions = Reflux.createActions([
-  'getCards'
+  'get',
+  'getComplete',
+  'getMany',
+  'getManyComplete',
+  'error'
 ]);
 
 module.exports = CardActions;

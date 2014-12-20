@@ -3,64 +3,55 @@ var request     = require('superagent');
 var RSVP        = require('rsvp');
 var Promise     = RSVP.Promise;
 var CardActions = require('actions/CardActions');
-
-IMAGE_API_URL = "http://mtgimage.com/multiverseid/"; // + id + ".jpg"
-CARD_API_URL  = "https://api.deckbrew.com/mtg/cards"; // "?multiverse_id=" + id
-
-var getImageUrl = function(id) {
-  return IMAGE_API_URL + id + '.jpg'
-}
-
-var getCardEndpointUrl = function(id) {
-  return CARD_API_URL + '?multiverseid=' + id
-}
+var Sync        = require('lib/Sync');
 
 var CardStore = Reflux.createStore({
 
   listenables: CardActions,
 
-  init: function() {
+  init() {
     this.cards = {};
   },
 
-  onGetCards: function(ids) {
-    this.fetchMany(ids)
-      .then(
-        this.updateCards.bind(this, ids),
-        this.triggerError
-      );
+  onGet(id) {
+    if (this.cards[id]) return this.cards[id];
+
+    return Sync.getCard(id)
+      .then(this._getComplete.bind(this, id), this._getError);
   },
 
-  updateCards: function(cards, data) {
-    cards.map(function(card, i) {
-      // `cards[i]` is a multiverse_id which
-      // is used as the key in `this.cards`
-      this.cards[cards[i]] = data[i][0];
-      this.cards[cards[i]].image_url = getImageUrl(cards[i]);
-      this.cards[cards[i]].multiverse_id = cards[i];
-    }, this);
-
-    this.trigger(this.cards);
+  _getComplete(data) {
+    this.trigger(data);
   },
 
-  triggerError: function(data) {
-    this.trigger({ error: data });
-  },
-
-  fetchOne: function(id) {
-    return new Promise(function(resolve, reject) {
-      if (this.cards[id] !== undefined) {
-        resolve(this.cards[id]);
-      } else {
-        request.get(getCardEndpointUrl(id), function(res) {
-          resolve(res.body);
+  onGetMany(ids) {
+    var promises = ids.map(function(id) {
+      return Sync.getCard(id)
+        .then(function(data) {
+          return { id: id, data: data[0] };
         });
-      }
-    }.bind(this));
+    });
+
+    RSVP.all(promises)
+      .then(this._getManyComplete, this._getManyError);
   },
 
-  fetchMany: function(ids) {
-    return RSVP.all(ids.map(this.fetchOne));
+  _getManyComplete(data) {
+    this.trigger(data);
+  },
+
+  _syncComplete(id, data) {
+    this.cards[id] = data[0];
+
+    this.trigger({
+      id: id,
+      data: this.cards[id]
+    });
+  },
+
+  _syncError(message) {
+    this.trigger({error: message})
+    // CardActions.error(message);
   }
 
 });

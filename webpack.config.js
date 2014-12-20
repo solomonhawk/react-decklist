@@ -32,7 +32,7 @@ module.exports = {
     loaders: [
       {
         test: /\.js$/,
-        loader: 'jsx-loader?harmony=true'
+        loader: 'envify-loader!jsx-loader?harmony=true'
       },
       {
         test: /\.json$/,

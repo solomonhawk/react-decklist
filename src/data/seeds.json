@@ -3,6 +3,15 @@
     "cards": [
       { "multiverse_id": 209044 },
       { "multiverse_id": 129480 },
+      { "multiverse_id": 228118 },
+      { "multiverse_id": 376558 },
+      { "multiverse_id": 159277 },
+      { "multiverse_id": 82989 }
+    ]
+  },{
+    "cards": [
+      { "multiverse_id": 209044 },
+      { "multiverse_id": 129480 },
       { "multiverse_id": 386294 },
       { "multiverse_id": 389681 },
       { "multiverse_id": 228118 },
@@ -10,13 +19,17 @@
       { "multiverse_id": 159277 },
       { "multiverse_id": 82989 }
     ]
-  },
-
-  {
+  },{
     "cards": [
       { "multiverse_id": 373322 },
       { "multiverse_id": 386294 },
       { "multiverse_id": 129480 },
+      { "multiverse_id": 389681 },
+      { "multiverse_id": 4630 },
+      { "multiverse_id": 383008 }
+    ]
+  },{
+    "cards": [
       { "multiverse_id": 389681 },
       { "multiverse_id": 4630 },
       { "multiverse_id": 383008 }
