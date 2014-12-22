@@ -70,10 +70,7 @@ var Sort = {
 
   _byKey(list, key, order, grouped) {
     var sorted  = list.sort(Sort._keyCompare.bind(this, key));
-
-    if (grouped != false) {
-      sorted = Sort._groupBy(sorted, key);
-    }
+    if (grouped != false) sorted = Sort._groupBy(sorted, key);
 
     return (!order || order == Sort.order.ASC) ? sorted : sorted.reverse()
   },

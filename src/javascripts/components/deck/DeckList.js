@@ -87,6 +87,7 @@ var DeckList = React.createClass({
 
       createCardLists = function(cards, i) {
         if (!cards.length) return;
+
         return (
           <li className="DeckList-Item" style={{ width: columnWidth }} key={ i } >
             <CardList cards={ cards } />
@@ -96,6 +97,7 @@ var DeckList = React.createClass({
 
       createDeckList = function(list, i) {
         if (!list.length) return;
+
         return (
           <div className="DeckList-wrapper" key={ i }>
             <ul className="DeckList">
@@ -120,7 +122,7 @@ var DeckList = React.createClass({
           <SelectInput onChange={ this._onOrderChange } options={ orderOptions } value={ order } allowBlank={ false } />
         </div>
 
-        <ResizablePanel>
+        <ResizablePanel panels={ deckLists.length }>
           { deckLists }
         </ResizablePanel>
       </div>

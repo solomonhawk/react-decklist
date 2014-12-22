@@ -40,7 +40,7 @@ var CardStore = Reflux.createStore({
     data.map(function(card) {
       this.cards[card.id] = this.cards[card.id] || card.data;
     }, this);
-    console.log(this.cards);
+
     this.trigger(data);
   },
 
@@ -55,7 +55,6 @@ var CardStore = Reflux.createStore({
 
   _syncError(message) {
     this.trigger({error: message})
-    // CardActions.error(message);
   }
 
 });
