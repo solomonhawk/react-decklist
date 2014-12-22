@@ -24,11 +24,11 @@ var Card = React.createClass({
 
     return (
       <div className={ "Card " + classes }
-           onMouseMove={ this.onMouseMove }
-           onMouseEnter={ this.onMouseEnter }
-           onMouseLeave={ this.onMouseLeave }
-           onMouseDown={ this.onMouseDown }
-           onMouseUp={ this.onMouseUp }>
+           onMouseMove={ this._onMouseMove }
+           onMouseEnter={ this._onMouseEnter }
+           onMouseLeave={ this._onMouseLeave }
+           onMouseDown={ this._onMouseDown }
+           onMouseUp={ this._onMouseUp }>
 
         <img alt={ this.props.data.name }
              src={ this.props.data.editions[0].image_url || DEFAULT_CARD_IMG_URL } />
@@ -37,21 +37,21 @@ var Card = React.createClass({
     );
   },
 
-  onMouseMove: function(e) {
+  _onMouseMove: function(e) {
     if (this.state.mouseDown) {
       this.setState({ zoomed: false });
     }
   },
 
-  onMouseLeave: function(e) {
+  _onMouseLeave: function(e) {
     this.setState({ zoomed: false });
   },
 
-  onMouseDown: function(e) {
+  _onMouseDown: function(e) {
     this.setState({ zoomed: true, mouseDown: true });
   },
 
-  onMouseUp: function(e) {
+  _onMouseUp: function(e) {
     this.setState({ zoomed: false, mouseDown: false });
   }
 });

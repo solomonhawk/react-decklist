@@ -29,7 +29,7 @@ $ease-in-out-circ:  cubic-bezier(0.785, 0.135, 0.150, 0.860)
 $ease-in-out-back:  cubic-bezier(0.680, -0.550, 0.265, 1.550)
 
 
-$scale: 1
+$scale: .7
 $unit: 4px
 
 =clearfix
@@ -51,7 +51,12 @@ $unit: 4px
 body
   background-color: #222
   color: #fff
-  padding: 4 * $unit
+  margin: 0
+
+body,
+html,
+#app
+  height: 100%
 
 ul
   list-style-type: none
@@ -65,45 +70,126 @@ li.placeholder:before
   content: "Drop here"
   color: rgb(225,210,90)
 
+.DeckLists
+  height: 100%
+  overflow: hidden
+
+.DeckControls
+  position: absolute
+  right: 0
+  z-index: 100
+
+.ResizablePanel
+  background-color: #000
+  height: 100%
+
+.ResizablePanel-Item
+  height: 33%
+  overflow: scroll
+
+.ResizablePanel-DragHandle
+  background-color: #222
+  cursor: -webkit-grab
+  position: relative
+  z-index: 100
+
+  &:after
+    content: '∴'
+    position: absolute
+    width: 100%
+    top: 50%
+    -webkit-transform: translate(0, -50%)
+    left: 0
+    text-align: center
+    color: rgba(#fff, 0.3)
+    z-index: 1
+    font-size: 8px
+    font-weight: bold
+
+  &:before
+    background-color: #222
+    height: 100%
+    content: ''
+    text-align: center
+    top: 50%
+    -webkit-transform: translate(0, -50%)
+    -webkit-transition: height 0.15s $snap, background-color 0.2s ease-in-out, 0.15s visibility 0s linear
+    position: absolute
+    visibility: hidden
+    width: 100%
+
+  &:active
+    cursor: -webkit-grabbing
+
+  &:hover:after
+    color: rgba(#fff, 0.8)
+
+  &:hover:before
+    z-index: 1
+    background-color: #333
+    -webkit-transition-delay: 0s
+    height: 120%
+    visibility: visible
+
+.DeckList-wrapper
+  +clearfix
+  overflow: scroll
+  padding: 4 * $unit
+  height: 100%
+
 .DeckList
   +clearfix
+  font-size: 0
+  min-height: 100%
   white-space: nowrap
 
   .DeckList-Item
     display: inline-block
+    font-size: normal
     vertical-align: top
     -webkit-user-select: none
     user-select: none
     width: 250px * $scale
 
     + .DeckList-Item
-      margin-left: 8px
+      margin-left: 2 * $unit
 
 .CardList
-  outline: 1px dotted #666
-  padding: $unit
+  // outline: 1px dotted #666
+  // background: lime
+  width: 100%
 
   .CardList-Item
     cursor: pointer
-    height: 9 * $unit * $scale
-    padding: 0
+    height: 0
+    width: 100%
+    padding: 14% 0 0
+    position: relative
     -webkit-user-select: none
     user-select: none
 
     &:last-child
-      height: auto
+      padding-top: 142%
+
+      .Card
+        height: auto
 
 .Card
   border-radius: 2 * $unit * $scale
+  // outline: 3px solid orange
+  outline-offset: -3px
   cursor: pointer
   transform: scale(1)
   height: 100%
-  position: relative
+  position: absolute
+  top: 0
+  left: 0
   transition: 0.25s transform $ease-in-out-quint
   -webkit-user-select: none
   user-select: none
   white-space: normal
   z-index: 1
+  width: 100%
 
   > img
     border-radius: 2 * $unit * $scale

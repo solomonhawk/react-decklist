@@ -29,20 +29,20 @@ var Sort = {
 
   getSortOptions() {
     var sortOptions = [
-      { value: Sort.type.byCmc,   text: 'Sort by CMC' },
-      { value: Sort.type.byName,  text: 'Sort by Name' },
-      { value: Sort.type.byType,  text: 'Sort by Type' },
-      { value: Sort.type.byColor, text: 'Sort by Color' }
+      { value: Sort.type.byCmc,   text: 'CMC' },
+      { value: Sort.type.byName,  text: 'Name' },
+      { value: Sort.type.byType,  text: 'Type' },
+      { value: Sort.type.byColor, text: 'Color' }
     ];
 
     var orderOptions = [
-      { value: Sort.order.ASC, text: 'Ascending' },
-      { value: Sort.order.DESC, text: 'Descending' }
+      { value: Sort.order.ASC,  text: 'ASC' },
+      { value: Sort.order.DESC, text: 'DESC' }
     ];
 
     return {
-      sort: sortOptions,
-      order: orderOptions
+      sort  : sortOptions,
+      order : orderOptions
     }
   },
 

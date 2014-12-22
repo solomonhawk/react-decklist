@@ -37,6 +37,10 @@ var CardStore = Reflux.createStore({
   },
 
   _getManyComplete(data) {
+    data.map(function(card) {
+      this.cards[card.id] = this.cards[card.id] || card.data;
+    }, this);
+    console.log(this.cards);
     this.trigger(data);
   },
 
